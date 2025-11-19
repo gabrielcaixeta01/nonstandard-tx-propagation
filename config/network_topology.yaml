@@ -1,0 +1,194 @@
+network:
+  name: "nonstandard_tx_propagation"
+  description: "Mixed Bitcoin network with filtering and permissive nodes."
+  total_nodes: 21
+
+roles:
+  miner:
+    count: 1
+    policy: "filtering"
+    mining: true
+    acceptnonstdtxn: false
+
+  filtering_nodes:
+    count: 14
+    policy: "filtering"
+    mining: false
+    acceptnonstdtxn: false
+
+  permissive_nodes:
+    count: 6
+    policy: "permissive"
+    mining: false
+    acceptnonstdtxn: true
+
+nodes:
+  - id: miner-1
+    role: miner
+    rpc_port: 18443
+    p2p_port: 18444
+    config:
+      - "acceptnonstdtxn=0"
+      - "relaynonstandard=0"
+
+  # Filtering nodes (node-filter-1 to node-filter-14)
+  - id: node-filter-1
+    role: filtering
+    rpc_port: 18501
+    p2p_port: 18601
+    config: ["acceptnonstdtxn=0"]
+
+  - id: node-filter-2
+    role: filtering
+    rpc_port: 18502
+    p2p_port: 18602
+    config: ["acceptnonstdtxn=0"]
+
+  - id: node-filter-3
+    role: filtering
+    rpc_port: 18503
+    p2p_port: 18603
+    config: ["acceptnonstdtxn=0"]
+
+  - id: node-filter-4
+    role: filtering
+    rpc_port: 18504
+    p2p_port: 18604
+    config: ["acceptnonstdtxn=0"]
+
+  - id: node-filter-5
+    role: filtering
+    rpc_port: 18505
+    p2p_port: 18605
+    config: ["acceptnonstdtxn=0"]
+
+  - id: node-filter-6
+    role: filtering
+    rpc_port: 18506
+    p2p_port: 18606
+    config: ["acceptnonstdtxn=0"]
+
+  - id: node-filter-7
+    role: filtering
+    rpc_port: 18507
+    p2p_port: 18607
+    config: ["acceptnonstdtxn=0"]
+
+  - id: node-filter-8
+    role: filtering
+    rpc_port: 18508
+    p2p_port: 18608
+    config: ["acceptnonstdtxn=0"]
+
+  - id: node-filter-9
+    role: filtering
+    rpc_port: 18509
+    p2p_port: 18609
+    config: ["acceptnonstdtxn=0"]
+
+  - id: node-filter-10
+    role: filtering
+    rpc_port: 18510
+    p2p_port: 18610
+    config: ["acceptnonstdtxn=0"]
+
+  - id: node-filter-11
+    role: filtering
+    rpc_port: 18511
+    p2p_port: 18611
+    config: ["acceptnonstdtxn=0"]
+
+  - id: node-filter-12
+    role: filtering
+    rpc_port: 18512
+    p2p_port: 18612
+    config: ["acceptnonstdtxn=0"]
+
+  - id: node-filter-13
+    role: filtering
+    rpc_port: 18513
+    p2p_port: 18613
+    config: ["acceptnonstdtxn=0"]
+
+  - id: node-filter-14
+    role: filtering
+    rpc_port: 18514
+    p2p_port: 18614
+    config: ["acceptnonstdtxn=0"]
+
+  # Permissive nodes
+  - id: node-perm-1
+    role: permissive
+    rpc_port: 18701
+    p2p_port: 18801
+    config: ["acceptnonstdtxn=1", "relaynonstandard=1"]
+
+  - id: node-perm-2
+    role: permissive
+    rpc_port: 18702
+    p2p_port: 18802
+    config: ["acceptnonstdtxn=1", "relaynonstandard=1"]
+
+  - id: node-perm-3
+    role: permissive
+    rpc_port: 18703
+    p2p_port: 18803
+    config: ["acceptnonstdtxn=1", "relaynonstandard=1"]
+
+  - id: node-perm-4
+    role: permissive
+    rpc_port: 18704
+    p2p_port: 18804
+    config: ["acceptnonstdtxn=1", "relaynonstandard=1"]
+
+  - id: node-perm-5
+    role: permissive
+    rpc_port: 18705
+    p2p_port: 18805
+    config: ["acceptnonstdtxn=1", "relaynonstandard=1"]
+
+  - id: node-perm-6
+    role: permissive
+    rpc_port: 18706
+    p2p_port: 18806
+    config: ["acceptnonstdtxn=1", "relaynonstandard=1"]
+
+connections:
+  - from: miner-1
+    to: [node-filter-1, node-filter-2, node-perm-1]
+
+  - from: node-filter-1
+    to: [node-filter-2, node-filter-4, node-perm-1]
+
+  - from: node-filter-2
+    to: [node-filter-3, node-filter-5, node-perm-2]
+
+  - from: node-filter-3
+    to: [node-filter-4, node-filter-6, node-perm-3]
+
+  - from: node-filter-4
+    to: [node-filter-5, node-filter-7, node-perm-4]
+
+  - from: node-filter-5
+    to: [node-filter-6, node-filter-8, node-perm-5]
+
+  - from: node-filter-6
+    to: [node-filter-7, node-filter-9, node-perm-6]
+
+  - from: node-perm-1
+    to: [node-perm-2, node-filter-3, miner-1]
+
+  - from: node-perm-2
+    to: [node-perm-3, node-filter-5, miner-1]
+
+  - from: node-perm-3
+    to: [node-perm-4, node-filter-8, miner-1]
+
+  - from: node-perm-4
+    to: [node-perm-5, node-filter-10, miner-1]
+
+  - from: node-perm-5
+    to: [node-perm-6, node-filter-12, miner-1]
+
+  - from: node-perm-6
+    to: [node-perm-1, node-filter-14, miner-1]
