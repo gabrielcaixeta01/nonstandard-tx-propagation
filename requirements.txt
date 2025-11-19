@@ -1,0 +1,9 @@
+python-bitcoinrpc
+python-bitcoinlib
+requests
+pandas
+numpy
+matplotlib
+seaborn
+tqdm
+pyyaml
